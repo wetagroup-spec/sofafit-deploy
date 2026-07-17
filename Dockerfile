@@ -3,8 +3,9 @@ FROM node:20-alpine
 WORKDIR /app
 
 COPY package.json package-lock.json ./
+ARG CACHEBUST=2
 ENV NODE_ENV=development
-RUN npm ci --include=dev
+RUN echo "cachebust $CACHEBUST" && npm ci --include=dev && npx vite --version
 
 COPY . .
 RUN npm run build
